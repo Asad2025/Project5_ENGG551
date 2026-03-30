@@ -3,81 +3,144 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ENGO651 Lab 5</title>
+  <title>ENGO651 / S51 - Lab 5</title>
+
   <link rel="stylesheet" href="style.css" />
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
 </head>
 <body>
   <div class="container">
-    <h1>ENGO651 / S51 - Lab 5</h1>
-    <p class="subtitle">MQTT over WebSockets + Geolocation</p>
+    <header class="page-header">
+      <h1>ENGO651 / S51 - Lab 5</h1>
+      <p class="subtitle">MQTT over WebSockets, GeoJSON, and Leaflet Map</p>
+    </header>
 
-    <section class="card">
-      <h2>Connection</h2>
-      <label for="broker">Broker URL</label>
-      <input
-        type="text"
-        id="broker"
-        value="wss://test.mosquitto.org:8081"
-      />
+    <div class="grid">
+      <section class="card">
+        <h2>Broker Connection</h2>
 
-      <label for="clientId">Client ID</label>
-      <input
-        type="text"
-        id="clientId"
-        value=""
-        placeholder="Auto-generated if left empty"
-      />
+        <div class="form-grid">
+          <div>
+            <label for="host">Host</label>
+            <input type="text" id="host" value="test.mosquitto.org" />
+          </div>
 
-      <div class="button-row">
-        <button id="connectBtn">Connect</button>
-        <button id="disconnectBtn">Disconnect</button>
-      </div>
+          <div>
+            <label for="port">Port</label>
+            <input type="number" id="port" value="8081" />
+          </div>
+        </div>
 
-      <p>Status: <span id="status">Disconnected</span></p>
-    </section>
+        <div>
+          <label for="clientId">Client ID</label>
+          <input
+            type="text"
+            id="clientId"
+            placeholder="Auto-generated if left empty"
+          />
+        </div>
 
-    <section class="card">
-      <h2>Subscribe</h2>
-      <label for="subTopic">Topic</label>
-      <input
-        type="text"
-        id="subTopic"
-        value="asad/lab5/topic"
-      />
-      <button id="subscribeBtn">Subscribe</button>
-    </section>
+        <div class="button-row">
+          <button id="startBtn">Start</button>
+          <button id="endBtn" class="secondary">End</button>
+        </div>
 
-    <section class="card">
-      <h2>Publish</h2>
-      <label for="pubTopic">Topic</label>
-      <input
-        type="text"
-        id="pubTopic"
-        value="asad/lab5/topic"
-      />
+        <p class="status-line">
+          Status: <span id="status">Disconnected</span>
+        </p>
+      </section>
 
-      <label for="message">Message</label>
-      <input
-        type="text"
-        id="message"
-        placeholder="Enter message"
-      />
+      <section class="card">
+        <h2>Topics</h2>
 
-      <button id="publishBtn">Publish</button>
-    </section>
+        <div>
+          <label for="tempTopic">My Temperature Topic</label>
+          <input
+            type="text"
+            id="tempTopic"
+            value="engo651/asad_haider/my_temperature"
+          />
+        </div>
 
-    <section class="card">
-      <h2>Geolocation</h2>
-      <button id="locationBtn">Send My Location</button>
-      <p id="locationOutput">Latitude: --, Longitude: --</p>
-    </section>
+        <div>
+          <label for="subTopic">Custom Subscribe Topic</label>
+          <input
+            type="text"
+            id="subTopic"
+            value="asad/lab5/topic"
+          />
+        </div>
 
-    <section class="card">
-      <h2>Received Messages</h2>
-      <div id="messages"></div>
-    </section>
+        <div class="button-row">
+          <button id="subscribeBtn">Subscribe</button>
+          <button id="subscribeTempBtn">Subscribe to Temperature Topic</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Publish Message</h2>
+
+        <div>
+          <label for="pubTopic">Publish Topic</label>
+          <input
+            type="text"
+            id="pubTopic"
+            value="asad/lab5/topic"
+          />
+        </div>
+
+        <div>
+          <label for="message">Message</label>
+          <input
+            type="text"
+            id="message"
+            placeholder="Enter any message"
+          />
+        </div>
+
+        <button id="publishBtn">Publish</button>
+      </section>
+
+      <section class="card">
+        <h2>Share My Status</h2>
+        <p class="small-text">
+          Sends GeoJSON with your current location and a random temperature to your temperature topic.
+        </p>
+
+        <div class="button-row">
+          <button id="shareStatusBtn">Share My Status</button>
+        </div>
+
+        <p id="locationOutput">Latitude: --, Longitude: --</p>
+        <p id="temperatureOutput">Temperature: -- °C</p>
+      </section>
+
+      <section class="card full-width">
+        <h2>Temperature Map</h2>
+        <div id="map"></div>
+        <p class="small-text">
+          Click the marker to view the current temperature in a Leaflet popup.
+        </p>
+      </section>
+
+      <section class="card full-width">
+        <h2>Received Messages</h2>
+        <div id="messages"></div>
+      </section>
+    </div>
   </div>
 
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
   <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
   <script src="script.js"></script>
 </body>
