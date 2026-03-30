@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ENGO651 Lab 5</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>ENGO651 / S51 - Lab 5</h1>
+    <p class="subtitle">MQTT over WebSockets + Geolocation</p>
+
+    <section class="card">
+      <h2>Connection</h2>
+      <label for="broker">Broker URL</label>
+      <input
+        type="text"
+        id="broker"
+        value="wss://test.mosquitto.org:8081"
+      />
+
+      <label for="clientId">Client ID</label>
+      <input
+        type="text"
+        id="clientId"
+        value=""
+        placeholder="Auto-generated if left empty"
+      />
+
+      <div class="button-row">
+        <button id="connectBtn">Connect</button>
+        <button id="disconnectBtn">Disconnect</button>
+      </div>
+
+      <p>Status: <span id="status">Disconnected</span></p>
+    </section>
+
+    <section class="card">
+      <h2>Subscribe</h2>
+      <label for="subTopic">Topic</label>
+      <input
+        type="text"
+        id="subTopic"
+        value="asad/lab5/topic"
+      />
+      <button id="subscribeBtn">Subscribe</button>
+    </section>
+
+    <section class="card">
+      <h2>Publish</h2>
+      <label for="pubTopic">Topic</label>
+      <input
+        type="text"
+        id="pubTopic"
+        value="asad/lab5/topic"
+      />
+
+      <label for="message">Message</label>
+      <input
+        type="text"
+        id="message"
+        placeholder="Enter message"
+      />
+
+      <button id="publishBtn">Publish</button>
+    </section>
+
+    <section class="card">
+      <h2>Geolocation</h2>
+      <button id="locationBtn">Send My Location</button>
+      <p id="locationOutput">Latitude: --, Longitude: --</p>
+    </section>
+
+    <section class="card">
+      <h2>Received Messages</h2>
+      <div id="messages"></div>
+    </section>
+  </div>
+
+  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
